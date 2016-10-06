@@ -59,15 +59,32 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 	   */
 	  H5PEditor.findField('settings/gameMode', parent).$item.find('select').on('change', function () {
 		if($(this).val() == 'singleDZ')
-		{
+		{   
 			var draggables = that.params.elements; //Draggables Array
 			var dropZones = that.params.dropZones; //DropZones Array
 			
+			//Cameron Eby 
+			//when single dz is selected the following requirements need to be met:
+              //dropzones need to be limited to only 1.  
+              //what should happen if more than 1 drop zones already exists?
+              //The Option to add dropzones needs to be diabled.
+              //The single dropzone needs to match the height of the draggables arrangment. dz[0].height = droppables[last].y-droppables[first].y;  
+              //All draggables should be on the left side in single column fashion.
+              //The drop zone(s) should be on the right side.
+               
+            var draggablesGroupHeight = 0;
 			if(draggables.length)
-			{
+			{   
+			    console.log("User Selected " + $(this).val() + " for Game Mode.");
 				draggables.forEach(function(draggable) {
-					console.log(draggable); //Each draggable
+				draggablesGroupHeight += draggable.height;
+				console.log(draggable); //Each draggable
 				});
+				
+				console.log("The combined height of the draggables : " + draggablesGroupHeight);
+				console.log("draggables position subtraction " + (draggables[2].y - draggables[0].y));
+				dropZones[0].height = (draggables[2].y - draggables[0].y);
+				console.log("newly assigned height of dropzone = " + dropZones[0].height);
 			}
 			if(dropZones.length)
 			{
@@ -80,6 +97,7 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 		if($(this).val() == 'multipleDZ')
 		{
 			//Do something else
+			console.log("User Selected " + this + " for Game Mode.");
 		}
 	  });
 	  
