@@ -52,6 +52,37 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
         that.backgroundOpacity = (that.backgroundOpacity === '') ? undefined : that.backgroundOpacity;
         that.updateAllElementsOpacity(that.elements, that.params.elements, 'element');
       });
+
+	  /**
+	   * Added by SUPRIYA RAJGOPAL
+	   * Search for 'gameMode' setting and onchange of the dropdown, do as you like!
+	   */
+	  H5PEditor.findField('settings/gameMode', parent).$item.find('select').on('change', function () {
+		if($(this).val() == 'singleDZ')
+		{
+			var draggables = that.params.elements; //Draggables Array
+			var dropZones = that.params.dropZones; //DropZones Array
+			
+			if(draggables.length)
+			{
+				draggables.forEach(function(draggable) {
+					console.log(draggable); //Each draggable
+				});
+			}
+			if(dropZones.length)
+			{
+				dropZones.forEach(function(dropZone) {
+					console.log(dropZone); //Each dropZone
+				});
+			}
+		}
+		
+		if($(this).val() == 'multipleDZ')
+		{
+			//Do something else
+		}
+	  });
+	  
     });
 
     // Get options from semantics, clone since we'll be changing values.
