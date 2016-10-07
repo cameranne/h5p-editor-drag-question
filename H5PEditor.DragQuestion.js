@@ -64,33 +64,68 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 			var dropZones = that.params.dropZones; //DropZones Array
 			
 			//Cameron Eby 
+			
 			//when single dz is selected the following requirements need to be met:
               //dropzones need to be limited to only 1.  
               //what should happen if more than 1 drop zones already exists?
-              //The Option to add dropzones needs to be diabled.
+              		//The Option to add dropzones needs to be diabled.
               //The single dropzone needs to match the height of the draggables arrangment. dz[0].height = droppables[last].y-droppables[first].y;  
               //All draggables should be on the left side in single column fashion.
               //The drop zone(s) should be on the right side.
-               
+
+              //instead of having an option maybe we can run a check:
+              // if (dropZones.lenght===1){set dropzone height to match total height of droppoables group.}
+              // or maybe the if statements true test will make the single dz option available.....
+              //...as soon as more than one dropZones exist the button for single drop zone is available.
+              //
+            var draggablesPositionDelta = 0;   
             var draggablesGroupHeight = 0;
 			if(draggables.length)
 			{   
 			    console.log("User Selected " + $(this).val() + " for Game Mode.");
-				draggables.forEach(function(draggable) {
-				draggablesGroupHeight += draggable.height;
-				console.log(draggable); //Each draggable
-				});
 				
-				console.log("The combined height of the draggables : " + draggablesGroupHeight);
-				console.log("draggables position subtraction " + (draggables[2].y - draggables[0].y));
-				dropZones[0].height = (draggables[2].y - draggables[0].y);
-				console.log("newly assigned height of dropzone = " + dropZones[0].height);
-			}
-			if(dropZones.length)
-			{
-				dropZones.forEach(function(dropZone) {
-					console.log(dropZone); //Each dropZone
+				draggables.forEach(function(draggable) {
+                    draggablesGroupHeight += draggable.height;
 				});
+				                    
+				console.log(draggables); //Each draggable
+				console.log("The combined height of the draggables : " + draggablesGroupHeight);
+				console.log("draggables y deltas " + (draggables[1].y - draggables[0].y));
+				console.log("*************newly assigned height of dropzone = " + dropZones[0].height);
+			}
+			if(dropZones.length){	
+			//set height of the dropzone
+			//this variable is just holding the y deltas for the drop zones
+			draggablesPositionDelta	= draggables[1].y - draggables[0].y ;
+			//checks deltas and set height accordingly
+			
+			console.log(dropZones);
+
+
+			dropZones.forEach(function(dropZone) {
+			
+
+			});
+
+
+			if(draggablesPositionDelta < 2 || draggablesPositionDelta > 12){
+			  
+              console.log( "y delta : " + draggablesPositionDelta);
+
+              console.log ("dropZone[0].height = " + dropZones[0].height );
+
+			  dropZones[0].height = 20;
+              
+              console.log ("dropZone[0].height = " + dropZones[0].height );
+
+			}else	
+				 console.log( "y delta : " + draggablesPositionDelta);
+				//dropZones[0].height = draggablesPositionDelta;
+              	console.log ("dropZone[0].height = " + dropZones[0].height );
+
+            console.log("The height should change in the first object ");
+            console.log(dropZones);
+			//Each dropZone
 			}
 		}
 		
@@ -122,7 +157,7 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 
     H5P.$window.on('resize', function () {
       if (that.size !== undefined && that.size.width !== undefined) {
-        that.resize();
+        	that.resize();
       }
     });
   }
@@ -451,7 +486,7 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
           x: 0,
           y: 0,
           width: 5,
-          height: 2.5,
+          height: 5,
           correctElements: []
         });
 
@@ -914,7 +949,7 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
       });
 
       dropzoneDnBElement.contextMenu.on('contextMenuRemove', function () {
-        if (!confirm(C.t('confirmRemoval'))) {
+        if (!confirm(C.t('confirmRemoval'))){
           return;
         }
 
