@@ -57,9 +57,10 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 	   * Added by SUPRIYA RAJGOPAL
 	   * Search for 'gameMode' setting and onchange of the dropdown, do as you like!
 	   */
-	  H5PEditor.findField('settings/gameMode', parent).$item.find('select').on('change', function () {
-		if($(this).val() == 'singleDZ')
-		{   
+H5PEditor.findField('settings/gameMode', parent).$item.find('select').on('change', 
+		function () {
+			if($(this).val() == 'singleDZ')
+			{   
 			var draggables = that.params.elements; //Draggables Array
 			var dropZones = that.params.dropZones; //DropZones Array
 			console.log(dropZones.length);
@@ -68,7 +69,14 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 				alert("This is not a Single Drop Zone game.  You have more than one drop zone.  If you would like to have a single drop zone game.  Please edit the game in the task pane deleting all but one dropzone and then make sure that all draggable objects are assigned to this one.");
 				console.log(this);
 				this.value='multipleDZ'; 
+				var currentDZHeight =this.options.question.task.dropZones[0].height;
+
+				console.log("current dropzone height" + currentDZHeight);
+
 			}
+				console.log("current dropzone height" + currentDZHeight);
+
+
 			//Cameron Eby 
 			//TODO:
 			//when single dz is selected the following requirements need to be met:
@@ -91,7 +99,9 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 			console.log("drop zone object: " + this.dropZones);
 			//console.log("Container Height: " + this.$container.height);
 			//console.log("container height: " + containerStyle.height);
-            
+            	var currentDZHeight =this.options.question.task.dropZones[0].height;
+
+				console.log(currentDZHeight);
             var draggablesPositionDelta = 0;   
             var draggablesGroupHeight = 0;
 			if(draggables.length)
@@ -105,7 +115,7 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 				console.log(draggables); //Each draggable
 				console.log("The combined height of the draggables : " + draggablesGroupHeight);
 				console.log("draggables y deltas " + (draggables[1].y - draggables[0].y));
-				console.log("*************newly assigned height of dropzone = " + dropZones[0].height);
+				console.log("************* Newly assigned height of dropzone = " + dropZones[0].height);
 			}
 			if(dropZones.length){	
 			//set height of the dropzone
@@ -119,9 +129,11 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 				var removeThisDropZone;
 				var singleDropZoneHeight = 20;
 				dropZones.forEach(function(dropZone) {
+				//ce
 // 				console.log("dropzones foreach running");
 // 				//experimenting with how to remove the elements that are not needed
 // 				//when the single drop zone option is selected.
+//				this is no longer needed... will delete before pushing
 // 				removeThisDropZone=dropZones[z];
 
 // 				H5P.jQuery(removeThisDropZone).remove();
@@ -139,13 +151,13 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 
               console.log ("dropZone[0].height = " + dropZones[0].height );
 
-			  dropZones[0].height = singleDropZoneHeight;
+			  //dropZones[0].height = singleDropZoneHeight;
               
               console.log ("dropZone[0].height = " + dropZones[0].height );
 
 			}else	
 				 console.log( "y delta : " + draggablesPositionDelta);
-				dropZones[0].height = singleDropZoneHeight;
+				//dropZones[0].height = singleDropZoneHeight;
               	console.log ("dropZone[0].height = " + dropZones[0].height );
 
             console.log("The height should change in the first object ");
