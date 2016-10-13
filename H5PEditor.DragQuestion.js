@@ -58,17 +58,10 @@ H5PEditor.widgets.dragQuestion = H5PEditor.DragQuestion = (function ($, DragNBar
 	   * Search for 'gameMode' setting and onchange of the dropdown, do as you like!
 	   */
 
-	   			// Cameron Eby 
+	   	// Cameron Eby 
 			// TODO:
-			// when single dz is selected the following requirements need to be met:
-              // dropzones need to be limited to only 1.  
-              // what should happen if more than 1 drop zones already exists?  --changed idea to run check on dropzones' array's length.
-              		//The Option to add dropzones needs to be disabled.
-              // The single dropzone needs to match the height of the draggables arrangement. dz[0].height = droppables[last].y-droppables[first].y;  
-              // All draggables should be on the left side in single column fashion.
-              // The drop zone(s) should be on the right side.
-
-              // Requirement changed:  Instead of having an option we will run a check in the event singledz is selected:
+			// Requirement changed:  
+					// Run a check in the event singledz is selected:
 				    // if (dropZones.lenght===1){set dropzone height to match total height of droppoables group.}
 				    // or maybe the if statements true test will make the single dz option available.....
 				    // ...as soon as more than one dropZones exist the button for single drop zone is available.
@@ -84,86 +77,49 @@ H5PEditor.findField('settings/gameMode', parent).$item.find('select').on('change
 
 			var draggables = that.params.elements; //Draggables Array
 			var dropZones = that.params.dropZones; //DropZones Array
-    
             var currentDZHeight = dropZones[0].height;
             var draggablesPositionDelta = 0;   
             var draggablesGroupHeight = 0;
             var z = 1;
-			var singleDropZoneHeight = 222;
+			
 
-			//check value of gameMode Element
+			// check value of gameMode Element
 			if($(this).val() == 'singleDZ')
 			{   
-			console.log("dropzones length: " + dropZones.length);
-			//
-		
-            dropZones[0].height = singleDropZoneHeight;
-                console.log("*********** height set to ********** " + dropZones[0].height );
-
-
-			//console.log("length of dropZones array: " + this.dropZones.length);
-			console.log("drop zone object: " + dropZones);
-			//console.log("Container Height: " + this.$container.height);
-			//console.log("container height: " + containerStyle.height);
-			console.log("current height of dropZone " + currentDZHeight);
-            //checks length of draggables array.
-			if(draggables.length)
-			{   
-			    console.log("User Selected " + $(this).val() + " for Game Mode.");
-				
-				draggables.forEach(function(draggable) {
-                draggablesGroupHeight += draggable.height;
-				});
-				                    
-				console.log(draggables); //Each draggable
-				console.log("The combined height of the draggables : " + draggablesGroupHeight);
-				console.log("draggables y deltas " + (draggables[1].y - draggables[0].y));
-				console.log("************* Newly assigned height of dropzone = " + dropZones[0].height);
-			}
-			if(dropZones.length){	
-			//set height of the dropzone
-			//this variable is just holding the y deltas for the drop zones
-			draggablesPositionDelta	= draggables[1].y - draggables[0].y ;
-			//checks deltas and set height accordingly
-			
-			console.log(dropZones);
-
-				
-				dropZones.forEach(function(dropZone) {
-				//ce
-// 				console.log("dropzones foreach running");
-// 				//experimenting with how to remove the elements that are not needed
-// 				//when the single drop zone option is selected.
-//				this is no longer needed... will delete before pushing
-// 				removeThisDropZone=dropZones[z];
-
-// 				H5P.jQuery(removeThisDropZone).remove();
-// 					console.log(dropZone);
-// 					console.log(removeThisDropZone);
-// 					H5P.jQuery(removeThisDropZone).remove();
-// 					z++;
-
-			});
-
-
-
-			}
-		}
-		
-		if($(this).val() == 'multipleDZ')
-		{  	console.log("Game Mode set to  " + $(this).val() + ".");
-			alert("Game Mode set to  " + $(this).val() + ".");
 				if(dropZones.length > 1)
                     {//notify user:
                         alert("This is not a Single Drop Zone game.  You have more than one drop zone.  If you would like to have a single drop zone game.  Please edit the game in the task pane deleting all but one dropzone and then make sure that all draggable objects are assigned to this one.");
-                        console.log(this);
 
-
+						//set gameMode option back to MultipleDZ
                         this.value='multipleDZ'; 
+						var z = 0;
+						//set height of multiple objects in editor although this will be 
+						//different in the 'game view'.
+						dropZones.forEach(function(dropZone) {
+							dropZones[z].height=6;
+							console.log(dropZones[z].height);
+							z++;
+						});
 
-                        console.log("current dropzone height" + currentDZHeight);
 
-         }//Do something else
+						}//set height of Single Drop Zone in Editor...
+						
+						dropZones[0].height=10;
+						console.log("DropZone Height : " + dropZones[0].height);
+			
+		}
+		
+  if($(this).val() == 'multipleDZ')
+		{  	
+			console.log("Game Mode set to  " + $(this).val() + ".");
+			alert("Game Mode set to  " + $(this).val() + ".");
+						
+					var z = 0;
+						dropZones.forEach(function(dropZone) {
+							dropZones[z].height=6;
+							z++;
+						});
+				
 		}
 	  });
 	  
